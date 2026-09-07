@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeLink · Community Emergency Service System (Lucknow)</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23ef4444'/><path d='M25 55h50M50 30v50' stroke='white' stroke-width='14' stroke-linecap='round'/></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <span class="logo-icon"><span class="pulse-ring"></span>+</span>
+                <div>
+                    <h1>Life<span>Link</span></h1>
+                    <p class="tagline">Community Emergency Service System · Lucknow</p>
+                </div>
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" data-page="dashboard">Dashboard</button>
+                <button class="nav-btn" data-page="emergency">Emergency</button>
+                <button class="nav-btn" data-page="hospitals">Hospitals</button>
+                <button class="nav-btn" data-page="diseases">Diseases</button>
+                <button class="nav-btn" data-page="chat">Chat</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main class="main">
+
+        <!-- ========== DASHBOARD ========== -->
+        <section class="page active" id="page-dashboard">
+            <div class="page-head">
+                <h2 class="page-title">Dashboard</h2>
+                <p class="page-sub">Live overview of emergency resources across Lucknow.</p>
+            </div>
+            <div class="stats-grid" id="stats-grid"></div>
+            <div class="panel-grid">
+                <div class="card">
+                    <div class="card-title-row">
+                        <h3>Blood Stock Overview</h3>
+                        <span class="pill">All Groups</span>
+                    </div>
+                    <p class="card-sub">Total units currently available across all hospitals.</p>
+                    <div id="blood-stock-list" class="bar-list"></div>
+                </div>
+                <div class="card">
+                    <div class="card-title-row">
+                        <h3>Top Diseases by Cases</h3>
+                        <span class="pill">This Year</span>
+                    </div>
+                    <p class="card-sub">Aggregate reported cases across 81 hospitals.</p>
+                    <div id="top-diseases-list" class="bar-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== EMERGENCY ========== -->
+        <section class="page" id="page-emergency">
+            <div class="page-head">
+                <h2 class="page-title">Emergency Request</h2>
+                <p class="page-sub">Answer four quick questions and we find the best hospital for you.</p>
+            </div>
+
+            <!-- Wizard steps -->
+            <div class="steps" id="wizard-steps">
+                <div class="step-dot active" data-step="1"><span class="step-num">1</span><span class="step-name">Patient</span></div>
+                <div class="step-line"></div>
+                <div class="step-dot" data-step="2"><span class="step-num">2</span><span class="step-name">Location</span></div>
+                <div class="step-line"></div>
+                <div class="step-dot" data-step="3"><span class="step-num">3</span><span class="step-name">Needs</span></div>
+                <div class="step-line"></div>
+                <div class="step-dot" data-step="4"><span class="step-num">4</span><span class="step-name">Result</span></div>
+            </div>
+
+            <div id="emergency-wizard" class="wizard">
+
+                <!-- STEP 1 : Patient -->
+                <div class="step-panel active" data-panel="1">
+                    <div class="card">
+                        <h3>Patient Information</h3>
+                        <div class="form-grid">
+                            <div class="field span2">
+                                <label for="patient-name">Patient Name</label>
+                                <input type="text" id="patient-name" placeholder="e.g. Aarav Sharma" autocomplete="off">
+                            </div>
+                            <div class="field">
+                                <label for="doctor-type">Doctor Type Needed</label>
+                                <select id="doctor-type">
+                                    <option value="">Loading specialists…</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="criticality">Criticality Level</label>
+                                <select id="criticality">
+                                    <option value="Critical">Critical — life-threatening</option>
+                                    <option value="High">High — urgent care</option>
+                                    <option value="Medium" selected>Medium — same-day</option>
+                                    <option value="Low">Low — routine</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="wizard-nav">
+                            <button class="btn btn-primary" type="button" onclick="wizardNext()">Next: Location →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2 : Location -->
+                <div class="step-panel" data-panel="2">
+                    <div class="card">
+                        <h3>Your Location</h3>
+                        <div class="form-grid">
+                            <div class="field">
+                                <label for="area-select">Your Area in Lucknow</label>
+                                <select id="area-select"></select>
+                            </div>
+                            <div class="field" id="custom-area-field" style="display:none;">
+                                <label for="custom-area">Type Your Area / Location</label>
+                                <input type="text" id="custom-area" placeholder="e.g. Bara Imambara, Lalbagh…" autocomplete="off">
+                            </div>
+                            <div class="field span2">
+                                <label for="blood-group">Blood Group (if needed)</label>
+                                <select id="blood-group">
+                                    <option value="">Not needed right now</option>
+                                    <option>A+</option><option>A-</option>
+                                    <option>B+</option><option>B-</option>
+                                    <option>O+</option><option>O-</option>
+                                    <option>AB+</option><option>AB-</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="wizard-nav">
+                            <button class="btn btn-ghost" type="button" onclick="wizardBack()">← Back</button>
+                            <button class="btn btn-primary" type="button" onclick="wizardNext()">Next: Review →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3 : Review & submit -->
+                <div class="step-panel" data-panel="3">
+                    <div class="card">
+                        <h3>Review Your Request</h3>
+                        <div id="review-summary" class="review-grid"></div>
+                        <div class="wizard-nav">
+                            <button class="btn btn-ghost" type="button" onclick="wizardBack()">← Back</button>
+                            <button class="btn btn-danger" type="button" onclick="findMatch()">🚑 Find Best Match</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4 : Result -->
+                <div class="step-panel" data-panel="4">
+                    <div id="emergency-result"></div>
+                    <div class="wizard-nav">
+                        <button class="btn btn-ghost" type="button" onclick="startNewRequest()">⟲ Start New Request</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== HOSPITALS ========== -->
+        <section class="page" id="page-hospitals">
+            <div class="page-head">
+                <h2 class="page-title">Hospitals in Lucknow</h2>
+                <p class="page-sub">All 81 registered emergency centres. Click a marker or card for full details.</p>
+            </div>
+
+            <div class="map-wrap">
+                <div id="hospitals-map"></div>
+                <div class="map-legend">
+                    <span><i class="lg lg-green"></i>Rating 4.5+</span>
+                    <span><i class="lg lg-blue"></i>4.0 – 4.4</span>
+                    <span><i class="lg lg-amber"></i>3.5 – 3.9</span>
+                    <span><i class="lg lg-red"></i>Under 3.5</span>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <div class="toolbar-search">
+                    <input type="text" id="hospital-search" placeholder="Search by name, doctor or area…" autocomplete="off">
+                </div>
+                <select id="rating-filter" title="Minimum rating">
+                    <option value="0">All ratings</option>
+                    <option value="4.5">4.5 ★ &amp; up</option>
+                    <option value="4.0">4.0 ★ &amp; up</option>
+                    <option value="3.5">3.5 ★ &amp; up</option>
+                </select>
+                <select id="sort-option" title="Sort">
+                    <option value="name">Sort: Name A–Z</option>
+                    <option value="rating">Sort: Best rating</option>
+                    <option value="price">Sort: Low price</option>
+                    <option value="beds">Sort: Most beds</option>
+                </select>
+            </div>
+            <div id="hospitals-list" class="hosp-grid"></div>
+        </section>
+
+        <!-- ========== DISEASES ========== -->
+        <section class="page" id="page-diseases">
+            <div class="page-head">
+                <h2 class="page-title">Diseases &amp; Case Data</h2>
+                <p class="page-sub">Track reported cases and monthly trends across Lucknow hospitals.</p>
+            </div>
+
+            <div class="disease-ctrl toolbar">
+                <div class="toolbar-search">
+                    <select id="disease-select">
+                        <option value="">Select a disease…</option>
+                    </select>
+                </div>
+                <div class="chart-tabs">
+                    <button class="btn btn-sm btn-primary active" data-tab="bar">Bar</button>
+                    <button class="btn btn-sm btn-ghost" data-tab="pie">Pie</button>
+                    <button class="btn btn-sm btn-ghost" data-tab="trend">Trend</button>
+                </div>
+            </div>
+
+            <div class="card chart-card">
+                <div class="card-title-row">
+                    <h3 id="chart-title">Disease Comparison</h3>
+                    <span class="pill" id="chart-subtitle">Bar · All diseases</span>
+                </div>
+                <div class="chart-wrap">
+                    <canvas id="disease-chart"></canvas>
+                    <div id="chart-fallback" class="chart-fallback" style="display:none;">
+                        Connect to the internet once so Chart.js can load, then this area comes alive.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== CHAT ========== -->
+        <section class="page" id="page-chat">
+            <div class="page-head">
+                <h2 class="page-title">Chat with Hospital</h2>
+                <p class="page-sub">Talk to a hospital agent directly about availability and updates.</p>
+            </div>
+            <div class="chat-card">
+                <div class="chat-head">
+                    <span class="chat-avatar">LL</span>
+                    <div>
+                        <strong>LifeLink Care Agent</strong>
+                        <span class="online-dot"></span> Online
+                    </div>
+                </div>
+                <div class="chat-body">
+                    <div class="chat-bubble bot">Namaste! 🙏 I'm your LifeLink assistant. Ask me about hospital beds, doctors, blood or ambulance availability.</div>
+                    <div class="chat-bubble user">Is Dr. Varsha Sharma available at Cloudnine for an OB check-up?</div>
+                    <div class="chat-bubble bot">Yes! Dr. Varsha Sharma (Gynecology, 12 yrs) is available tomorrow at 10:00 AM. Fee: Rs.600. Shall I book?</div>
+                </div>
+                <div class="chat-soon">
+                    <span>We will add it in next update</span>
+                </div>
+                <div class="chat-input">
+                    <input type="text" placeholder="Type a message…" disabled>
+                    <button class="btn btn-primary" disabled>Send</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== MODAL ===== -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="modal">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div id="toast" class="toast"></div>
+
+    <!-- ===== LIBS (CDN, free, no keys) ===== -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

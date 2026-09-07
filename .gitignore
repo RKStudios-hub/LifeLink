@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.env
+
+# Generated graphs
+*.png
+
+# OS / editor
+Desktop.ini
+Thumbs.db
+.vscode/
+.idea/

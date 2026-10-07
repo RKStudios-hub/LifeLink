@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>setstate</title></head>
+<body>
+<p>LifeLink test state setter</p>
+<script>
+  try {
+    localStorage.setItem('lifelink.onboarded', JSON.stringify(true));
+    localStorage.setItem('lifelink.permissionAsked', JSON.stringify(true));
+    localStorage.setItem('lifelink.location', JSON.stringify({
+      mode: 'manual',
+      lat: 26.8467,
+      lng: 80.9461,
+      accuracy: null,
+      label: 'Hazratganj, Lucknow'
+    }));
+    document.title = 'STATE_SET_OK';
+  } catch (e) {
+    document.title = 'STATE_SET_FAIL:' + e.message;
+  }
+</script>
+</body>
+</html>

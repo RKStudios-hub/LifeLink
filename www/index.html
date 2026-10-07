@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0e5aa7">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="LifeLink">
+  <meta name="description" content="LifeLink — emergency hospital assistance. Find nearby hospitals, check availability, documents and routes, online or offline.">
+
+  <title>LifeLink — Emergency Hospital Assistance</title>
+
+  <script>
+    /* The web app manifest cannot be fetched over file:// (CORS blocks it and
+       its start_url), which logs errors when index.html is opened directly.
+       Inject the link only when served over http(s) — PWA install only works
+       there anyway. */
+    if (location.protocol === 'http:' || location.protocol === 'https:') {
+      var __manifest = document.createElement('link');
+      __manifest.rel = 'manifest';
+      __manifest.href = 'manifest.webmanifest';
+      document.head.appendChild(__manifest);
+    }
+  </script>
+  <link rel="icon" type="image/png" href="icons/icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
+
+  <link rel="stylesheet" href="vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="app-header" id="app-header">
+      <div class="header-inner">
+        <div class="header-brand"><img src="icons/icon.png" alt="LifeLink" class="brand-img"></div>
+        <div class="header-text">
+          <div class="header-title">LifeLink</div>
+          <div class="header-sub"><span>Loading…</span></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="offline-banner" id="offline-banner" hidden>
+      <span class="material-symbols-outlined">cloud_off</span>
+      <span>You’re offline. Hospital information stored on this device is still available.</span>
+    </div>
+
+    <main class="screen no-nav" id="screen">
+      <div class="wrap">
+        <div class="loading-strip">
+          <span class="spinner dark"></span>
+          <span>Loading LifeLink…</span>
+        </div>
+      </div>
+    </main>
+
+    <nav class="bottom-nav" id="bottom-nav" hidden></nav>
+  </div>
+
+  <div class="modal-root" id="modal-root"></div>
+  <div class="toast-root" id="toast-root"></div>
+  <pre id="boot-log" hidden></pre>
+
+  <noscript>
+    <div style="padding:24px;font-family:sans-serif;text-align:center">
+      LifeLink needs JavaScript to run. Please enable it and reload.
+    </div>
+  </noscript>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/screens.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

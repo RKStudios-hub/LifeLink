@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>setstate-fresh</title></head>
+<body>
+<p>Clears LifeLink state (first-launch simulation)</p>
+<script>
+  try {
+    localStorage.removeItem('lifelink.onboarded');
+    localStorage.removeItem('lifelink.permissionAsked');
+    localStorage.removeItem('lifelink.location');
+    document.title = 'STATE_CLEARED_OK';
+  } catch (e) {
+    document.title = 'STATE_CLEAR_FAIL:' + e.message;
+  }
+</script>
+</body>
+</html>

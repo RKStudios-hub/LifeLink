@@ -771,9 +771,49 @@
     var crit = q.criticality || 'high';
     var step = (typeof App.findStep === 'number') ? App.findStep : 1;
 
-    function field(id, label, control) {
+    function field(id, label, control, labelFor) {
       return '<div class="field">' +
-        '<label for="' + id + '">' + esc(label) + '</label>' + control + '</div>';
+        '<label for="' + (labelFor || id) + '">' + esc(label) + '</label>' + control + '</div>';
+    }
+
+    function comboField(id, label, options, value, placeholder, searchable) {
+      var menuId = id + '-menu';
+      var selected = value || '';
+      var optionHtml = options.map(function (item, index) {
+        var optionValue = typeof item === 'string' ? item : item.value;
+        var optionLabel = typeof item === 'string' ? item : item.label;
+        var isSelected = selected === optionValue;
+        return '<div class="combo-option' + (isSelected ? ' selected' : '') + '" role="option" tabindex="-1"' +
+          ' id="' + menuId + '-option-' + index + '" aria-selected="' + (isSelected ? 'true' : 'false') + '"' +
+          ' data-act="combo-select" data-value="' + esc(optionValue) + '">' +
+          '<span>' + esc(optionLabel) + '</span>' + (isSelected ? icon('check', 'combo-option-check') : '') + '</div>';
+      }).join('');
+      var control = '<div class="combo-control' + (searchable ? ' combo-searchable' : '') + '" data-combo="' + esc(id) + '">';
+      var labelFor = id;
+
+      if (searchable) {
+        control += '<input class="combo-input" id="' + esc(id) + '" type="text" autocomplete="off" role="combobox"' +
+          ' aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" aria-controls="' + menuId + '"' +
+          ' placeholder="' + esc(placeholder) + '" value="' + esc(selected) + '">' +
+          '<button class="combo-toggle-button" type="button" data-act="combo-toggle" aria-label="Show ' + esc(label) + ' options"' +
+          ' aria-haspopup="listbox" aria-expanded="false" aria-controls="' + menuId + '">' + icon('expand_more', 'combo-chevron') + '</button>';
+      } else {
+        var selectedItem = options.find(function (item) {
+          return (typeof item === 'string' ? item : item.value) === selected;
+        });
+        var selectedLabel = selectedItem
+          ? (typeof selectedItem === 'string' ? selectedItem : selectedItem.label)
+          : (typeof options[0] === 'string' ? options[0] : options[0].label);
+        labelFor = id + '-trigger';
+          control += '<input class="combo-value" type="hidden" id="' + esc(id) + '" value="' + esc(selected) + '">' +
+          '<button class="combo-trigger" id="' + esc(labelFor) + '" type="button" data-act="combo-toggle" role="combobox"' +
+          ' aria-haspopup="listbox" aria-expanded="false" aria-controls="' + menuId + '">' +
+          '<span class="combo-trigger-value">' + esc(selectedLabel) + '</span>' + icon('expand_more', 'combo-chevron') + '</button>';
+      }
+
+      control += '<div class="combo-menu" id="' + menuId + '" role="listbox" hidden>' + optionHtml +
+        '<div class="combo-empty" hidden>No matches found</div></div></div>';
+      return field(id, label, control, labelFor);
     }
 
     var critBtns = [['critical', 'Critical'], ['high', 'High'], ['medium', 'Medium'], ['low', 'Low']]
@@ -804,11 +844,8 @@
           '<div class="find-form">' +
             field('f-name', 'Patient name',
               '<input id="f-name" type="text" autocomplete="name" placeholder="e.g. Anita Sharma" value="' + esc(q.name || '') + '">') +
-            field('f-area', 'Area',
-              '<input id="f-area" type="text" list="area-list" placeholder="e.g. Hazratganj (blank = current location)" value="' + esc(q.area || '') + '">' +
-              '<datalist id="area-list">' +
-                areas.map(function (a) { return '<option value="' + esc(a) + '"></option>'; }).join('') +
-              '</datalist>') +
+            comboField('f-area', 'Area', [{ value: '', label: 'Use current location' }].concat(areas),
+              q.area || '', 'Search or choose an area', true) +
             '<div class="field">' +
               '<label for="f-bmin">Budget range (₹ per consultation)</label>' +
               '<div class="budget-row">' +
@@ -830,18 +867,10 @@
         '<section class="section">' +
           sectionHead('Medical Needs') +
           '<div class="find-form">' +
-            field('f-dept', 'Department / medication required',
-              '<input id="f-dept" type="text" list="dept-list" placeholder="e.g. Cardiology, Orthopedics" value="' + esc(q.department || '') + '">' +
-              '<datalist id="dept-list">' +
-                depts.map(function (d) { return '<option value="' + esc(d) + '"></option>'; }).join('') +
-              '</datalist>') +
-            field('f-blood', 'Blood group needed',
-              '<select id="f-blood">' +
-                '<option value="">Not needed</option>' +
-                App.bloodGroups.map(function (g) {
-                  return '<option value="' + g + '"' + (q.bloodGroup === g ? ' selected' : '') + '>' + g + '</option>';
-                }).join('') +
-              '</select>') +
+            comboField('f-dept', 'Department / medication required', [{ value: '', label: 'Any department' }].concat(depts),
+              q.department || '', 'Search or choose a department', true) +
+            comboField('f-blood', 'Blood group needed', [{ value: '', label: 'Not needed' }].concat(App.bloodGroups),
+              q.bloodGroup || '', '', false) +
             '<div class="field">' +
               '<label id="crit-label">Criticality</label>' +
               '<div class="seg-row" role="radiogroup" aria-labelledby="crit-label">' + critBtns + '</div>' +

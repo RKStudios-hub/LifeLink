@@ -62,7 +62,7 @@
     location_on: 'location-dot', location_searching: 'location-crosshairs', lock: 'lock',
     map: 'map', medical_services: 'briefcase-medical', monitoring: 'heart-pulse',
     my_location: 'location-crosshairs', navigation: 'location-arrow', near_me: 'location-arrow',
-    open_in_new: 'arrow-up-right-from-square', place: 'map-pin', public: 'earth-americas',
+    open_in_new: 'arrow-up-right-from-square', expand_more: 'chevron-down', place: 'map-pin', public: 'earth-americas',
     restart_alt: 'rotate-left', search: 'magnifying-glass', search_off: 'magnifying-glass-minus',
     settings: 'gear', sort: 'arrow-down-wide-short', star: 'star', stethoscope: 'stethoscope',
     tag: 'tag', travel_explore: 'map-location-dot', tune: 'sliders', upload_file: 'file-arrow-up',

@@ -6,7 +6,7 @@
    in the UI instead of serving stale map imagery.
    ========================================================================== */
 
-var CACHE = 'lifelink-v3';
+var CACHE = 'lifelink-v6';
 
 var PRECACHE = [
   './',
@@ -21,12 +21,12 @@ var PRECACHE = [
   './data/hospitals.json',
   './vendor/leaflet/leaflet.js',
   './vendor/leaflet/leaflet.css',
-  './vendor/fonts/fonts.css',
-  './vendor/fonts/kJEhBvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oFsI.woff2',
-  './vendor/fonts/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko70yyygA.woff2',
-  './vendor/fonts/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko50yyygA.woff2',
-  './vendor/fonts/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko40yyygA.woff2',
-  './vendor/fonts/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2',
+  './vendor/fonts/inter.css',
+  './vendor/fonts/inter-latin-wght-normal.woff2',
+  './vendor/fonts/inter-latin-ext-wght-normal.woff2',
+  './vendor/fontawesome/css/fontawesome.min.css',
+  './vendor/fontawesome/css/solid.min.css',
+  './vendor/fontawesome/webfonts/fa-solid-900.woff2',
   './icons/icon.png',
   './icons/icon-192.png',
   './icons/icon-512.png',

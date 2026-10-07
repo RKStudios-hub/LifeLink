@@ -352,7 +352,7 @@ async function main() {
     ['#/trends', ['TOTAL CASES', 'Most reported conditions', 'Cases by area', 'not live surveillance']],
     ['#/find', ['Smart Hospital Finder', 'Patient name', 'Find nearest hospital', 'offline demo dataset']],
     ['#/documents', ['You may need:', 'Document requirements may vary']],
-    ['#/about', ['RK Studios', 'v1.0.0', 'Disclaimer']],
+    ['#/about', ['LifeLink', 'v1.0.0', 'Disclaimer']],
     ['#/settings', ['Clear cached data', 'App version']]
   ]) {
     await evaluate(`location.hash = ${JSON.stringify(route)}`);
@@ -410,11 +410,11 @@ async function main() {
 
   const icons = await evaluate(`(() => {
     const bad = [];
-    document.querySelectorAll('.material-symbols-outlined').forEach(el => {
+    document.querySelectorAll('.fa-icon').forEach(el => {
       const r = el.getBoundingClientRect();
       const cs = getComputedStyle(el);
-      if (r.width > 40) bad.push(el.textContent.trim() + ':' + Math.round(r.width) + 'px');
-      if (!/Material Symbols/.test(cs.fontFamily)) bad.push('font:' + el.textContent.trim());
+      if (r.width > 40) bad.push(el.className + ':' + Math.round(r.width) + 'px');
+      if (!/Font Awesome 7 Free/.test(cs.fontFamily)) bad.push('font:' + el.className);
     });
     return bad;
   })()`);

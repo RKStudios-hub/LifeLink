@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#0e5aa7">
+  <meta name="theme-color" content="#155eaa">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -28,11 +28,21 @@
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
 
-  <link rel="stylesheet" href="vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="vendor/fonts/inter.css">
+  <link rel="stylesheet" href="vendor/fontawesome/css/fontawesome.min.css">
+  <link rel="stylesheet" href="vendor/fontawesome/css/solid.min.css">
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <div class="startup-screen" id="startup-screen" role="status" aria-live="polite">
+    <div class="startup-content">
+      <div class="startup-logo"><img src="icons/icon.png" alt="LifeLink logo"></div>
+      <h1 class="startup-title">LifeLink</h1>
+      <p class="startup-status">Getting things ready</p>
+    </div>
+  </div>
+
   <div class="app" id="app">
     <header class="app-header" id="app-header">
       <div class="header-inner">
@@ -45,7 +55,7 @@
     </header>
 
     <div class="offline-banner" id="offline-banner" hidden>
-      <span class="material-symbols-outlined">cloud_off</span>
+      <i class="fa-solid fa-cloud-arrow-down fa-icon" aria-hidden="true"></i>
       <span>You’re offline. Hospital information stored on this device is still available.</span>
     </div>
 

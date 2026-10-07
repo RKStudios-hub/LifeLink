@@ -101,7 +101,7 @@
         html: '' +
           '<div class="welcome">' +
             '<div class="welcome-body">' +
-              '<div class="welcome-logo">' + icon('location_on') + '</div>' +
+              '<div class="welcome-logo"><img src="icons/icon.png" alt="" class="welcome-logo-image"></div>' +
               '<h1 class="welcome-name">Allow <span>LifeLink</span> to use your location?</h1>' +
               '<p class="welcome-tag">Your location helps us find nearby hospitals and calculate directions. ' +
                 'Your location is only used when you request location-based features.</p>' +
@@ -127,7 +127,7 @@
       html: '' +
         '<div class="welcome">' +
           '<div class="welcome-body">' +
-            '<div class="welcome-logo">' + icon('favorite') + '</div>' +
+            '<div class="welcome-logo"><img src="icons/icon.png" alt="" class="welcome-logo-image"></div>' +
             '<h1 class="welcome-name">Life<span>Link</span></h1>' +
             '<p class="welcome-tag">Find the right hospital when every second matters.</p>' +
             '<div class="welcome-points">' +
@@ -139,7 +139,7 @@
           '<div class="welcome-actions">' +
             '<button class="btn btn-primary btn-block btn-lg" data-act="get-started"><span>Get Started</span>' + icon('arrow_forward') + '</button>' +
           '</div>' +
-          '<div class="welcome-version">v' + App.VERSION + ' · RK Studios</div>' +
+          '<div class="welcome-version">v' + App.VERSION + ' · Offline hospital directory</div>' +
         '</div>'
     };
   }
@@ -273,7 +273,7 @@
       html: '' +
         '<div class="wrap">' +
           '<div class="search-bar">' +
-            '<span class="search-icon material-symbols-outlined">search</span>' +
+            icon('search', 'search-icon') +
             '<input class="search-input" type="text" inputmode="search" autocomplete="off" ' +
               'data-input="search" placeholder="Search hospital, area or doctor" value="' + esc(App.query) + '">' +
             '<button class="search-clear' + (App.query ? ' show' : '') + '" data-act="clear-search" aria-label="Clear search">' +
@@ -1101,7 +1101,7 @@
             '<h2>LifeLink</h2>' +
             '<div class="about-meta">' +
               '<span class="am-chip">Version v' + App.VERSION + '</span>' +
-              '<span class="am-chip">RK Studios</span>' +
+              '<span class="am-chip">Available offline</span>' +
             '</div>' +
           '</div>' +
 
@@ -1117,7 +1117,7 @@
           '<section class="section">' +
             sectionHead('Technologies') +
             '<div class="card"><div class="tag-list">' +
-              ['HTML', 'CSS', 'JavaScript', 'JSON', 'Leaflet', 'OpenStreetMap', 'OSRM', 'PWA / Service Worker']
+              ['HTML', 'CSS', 'JavaScript', 'Inter', 'Font Awesome', 'Leaflet', 'OpenStreetMap', 'OSRM', 'PWA / Service Worker']
                 .map(function (t) { return '<span class="tag blue">' + t + '</span>'; }).join('') +
             '</div></div>' +
           '</section>' +
@@ -1153,7 +1153,7 @@
             '<button class="list-row" data-act="open-github">' +
               '<span class="lr-icon">' + icon('code') + '</span>' +
               '<span class="lr-body"><span class="lr-title">GitHub Project</span>' +
-              '<span class="lr-sub">RKStudios-hub/LifeLink</span></span>' +
+              '<span class="lr-sub">View the project source</span></span>' +
               icon('open_in_new', 'chev') + '</button>' +
             '<button class="list-row" data-act="open-osm">' +
               '<span class="lr-icon green">' + icon('public') + '</span>' +
@@ -1163,7 +1163,7 @@
           '</div>' +
 
           '<div class="footer-links">' +
-            '<span>LifeLink v' + App.VERSION + ' · Built by RK Studios</span>' +
+            '<span>LifeLink v' + App.VERSION + ' · Emergency hospital assistance</span>' +
           '</div>' +
         '</div>'
     };
@@ -1291,7 +1291,7 @@
               '<div class="list-row">' +
                 '<span class="lr-icon green">' + icon('tag') + '</span>' +
                 '<span class="lr-body"><span class="lr-title">App version</span>' +
-                '<span class="lr-sub">Developer: RK Studios</span></span>' +
+                '<span class="lr-sub">App information</span></span>' +
                 '<span class="lr-value">v' + App.VERSION + '</span>' +
               '</div>' +
             '</div>' +

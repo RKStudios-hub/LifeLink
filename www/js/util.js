@@ -48,9 +48,33 @@
       .replace(/'/g, '&#39;');
   }
 
+  var ICONS = {
+    ambulance: 'truck-medical', arrow_back: 'arrow-left', arrow_forward: 'arrow-right',
+    bloodtype: 'droplet', call: 'phone', cancel: 'xmark', check: 'check',
+    check_circle: 'circle-check', checklist: 'list-check', chevron_right: 'chevron-right',
+    cloud_done: 'cloud', cloud_off: 'cloud-arrow-down', code: 'code', database: 'database',
+    delete: 'trash-can', description: 'file-lines', directions: 'diamond-turn-right',
+    download: 'download', edit: 'pen-to-square', edit_location: 'map-location-dot',
+    emergency: 'truck-medical', error: 'circle-exclamation', explore: 'compass', home: 'house',
+    fact_check: 'clipboard-check', folder: 'folder-open', gps_fixed: 'location-crosshairs',
+    help: 'circle-question', hotel: 'bed', info: 'circle-info', insurance: 'id-card',
+    layers: 'layer-group', local_hospital: 'hospital', location_off: 'location-dot',
+    location_on: 'location-dot', location_searching: 'location-crosshairs', lock: 'lock',
+    map: 'map', medical_services: 'briefcase-medical', monitoring: 'heart-pulse',
+    my_location: 'location-crosshairs', navigation: 'location-arrow', near_me: 'location-arrow',
+    open_in_new: 'arrow-up-right-from-square', place: 'map-pin', public: 'earth-americas',
+    restart_alt: 'rotate-left', search: 'magnifying-glass', search_off: 'magnifying-glass-minus',
+    settings: 'gear', sort: 'arrow-down-wide-short', star: 'star', stethoscope: 'stethoscope',
+    tag: 'tag', travel_explore: 'map-location-dot', upload_file: 'file-arrow-up',
+    verified: 'circle-check', verified_user: 'shield-halved', visibility: 'eye',
+    warning: 'triangle-exclamation', priority_high: 'circle-exclamation',
+    low_priority: 'arrow-down-wide-short'
+  };
+
   function icon(name, extraClass) {
-    return '<span class="material-symbols-outlined' +
-      (extraClass ? ' ' + extraClass : '') + '">' + name + '</span>';
+    var glyph = ICONS[name] || 'circle-question';
+    return '<i class="fa-solid fa-' + glyph + ' fa-icon' +
+      (extraClass ? ' ' + extraClass : '') + '" aria-hidden="true"></i>';
   }
 
   function $(sel, root) { return (root || document).querySelector(sel); }

@@ -69,7 +69,7 @@ Dump "$base/#/documents" 'documents'
 Check 'documents' @('You may need:', 'Document requirements may vary') @()
 
 Dump "$base/#/about" 'about'
-Check 'about' @('RK Studios', 'v1.0.0', 'Offline Mode', 'Disclaimer', 'OpenStreetMap') @()
+Check 'about' @('LifeLink', 'v1.0.0', 'Offline Mode', 'Disclaimer', 'OpenStreetMap') @()
 
 Dump "$base/#/settings" 'settings'
 Check 'settings' @('Clear cached data', 'Hospital dataset', 'App version') @()

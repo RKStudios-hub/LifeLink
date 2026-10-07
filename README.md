@@ -49,7 +49,7 @@ js/map.js             Leaflet wrappers: map, pins, user marker, OSRM routes
 js/screens.js         all screen renderers
 js/app.js             controller: routing, actions, location, settings
 data/hospitals.json   canonical dataset (generated)
-icons/, vendor/       icons, Leaflet 1.9.4, self-hosted fonts (offline)
+icons/, vendor/       icons, Leaflet 1.9.4, Font Awesome and Inter (offline)
 tools/                data build, packaging and test scripts
 ```
 

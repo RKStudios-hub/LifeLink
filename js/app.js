@@ -23,6 +23,21 @@
   };
   window.App = App;
 
+  var startupStartedAt = Date.now();
+  var startupFinished = false;
+
+  function finishStartup() {
+    if (startupFinished) return;
+    startupFinished = true;
+    var splash = document.getElementById('startup-screen');
+    if (!splash) return;
+    var delay = Math.max(0, 800 - (Date.now() - startupStartedAt));
+    window.setTimeout(function () {
+      splash.classList.add('startup-screen--done');
+      splash.setAttribute('aria-hidden', 'true');
+    }, delay);
+  }
+
   var K = U.STORE_KEYS;
 
   /* ================================================================== */
@@ -853,7 +868,9 @@
       { tab: 'about', route: '#/about', icon: 'info', label: 'About' }
     ];
 
-    nav.innerHTML = '<div class="nav-inner">' + items.map(function (it) {
+    var activeIndex = items.findIndex(function (it) { return screen.tab === it.tab; });
+    nav.style.setProperty('--nav-offset', (Math.max(0, activeIndex) * 100) + '%');
+    nav.innerHTML = '<div class="nav-inner"><span class="nav-indicator" aria-hidden="true"></span>' + items.map(function (it) {
       var active = screen.tab === it.tab;
       return '<button class="nav-item' + (active ? ' active' : '') + '" data-act="nav" data-route="' + it.route + '"' +
         (active ? ' aria-current="page"' : '') + '>' +
@@ -1530,6 +1547,7 @@
         restoreLocation();
         route();
         registerServiceWorker();
+        finishStartup();
       })
       .catch(function (err) {
         logError(err);
@@ -1539,6 +1557,7 @@
           '<div class="empty-text">' + U.esc(err.message) + '</div>' +
           '<button class="btn btn-primary btn-sm" data-act="nav" data-route="#/home">Reload app</button>' +
           '</div></div>';
+        finishStartup();
       });
   }
 

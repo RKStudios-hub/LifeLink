@@ -159,10 +159,6 @@
         '<div class="empty-text">Set a location to see hospitals around you.</div>' +
         '<button class="btn btn-soft btn-sm" data-act="select-location">Select location</button></div>';
 
-    var locNote = loc ? '' :
-      '<div class="note info">' + icon('info') +
-      '<span>Set your location to see distances and routes. You can also search hospitals without it.</span></div>';
-
     return {
       tab: 'home',
       header: {
@@ -174,66 +170,40 @@
       },
       html: '' +
         '<div class="wrap">' +
-          '<div class="emergency-card">' +
-            '<div class="emergency-head">' +
-              '<div class="emergency-icon">' + icon('emergency') + '</div>' +
-              '<div>' +
-                '<h2 class="emergency-title">Need a hospital?</h2>' +
-                '<p class="emergency-text">Find hospitals near your current location.</p>' +
-              '</div>' +
-            '</div>' +
-            '<button class="btn btn-danger btn-block btn-lg" data-act="use-location">' +
-              icon('near_me') + '<span>Use My Location</span></button>' +
-            '<div class="emergency-hint">OR</div>' +
-            '<button class="btn btn-outline btn-block" data-act="select-location">' +
-              icon('place') + '<span>Select Location</span></button>' +
-          '</div>' +
+          '<section class="home-welcome">' +
+            '<div><span class="home-eyebrow">LIFELINK CARE</span>' +
+              '<h1 class="home-title">Find care near you</h1>' +
+              '<p class="home-subtitle">Hospitals and essential health information, all in one place.</p></div>' +
+            '<button class="home-location" data-act="' + (loc ? 'select-location' : 'use-location') + '" aria-label="' +
+              (loc ? 'Change location' : 'Set your location') + '">' +
+              '<span class="home-location-icon">' + icon(loc ? 'place' : 'my_location') + '</span>' +
+              '<span class="home-location-copy"><strong>' + (loc ? esc(loc.label || 'Your location') : 'Set your location') +
+              '</strong><small>' + (loc ? 'Location selected' : 'For nearby hospitals and routes') + '</small></span>' +
+              icon('chevron_right', 'chev') +
+            '</button>' +
+          '</section>' +
 
-          '<button class="find-hero" data-act="nav" data-route="#/find">' +
-            '<span class="find-hero-icon">' + icon('travel_explore') + '</span>' +
-            '<span class="find-hero-body">' +
-              '<span class="find-hero-title">Smart Hospital Finder</span>' +
-              '<span class="find-hero-text">Tell us the department, budget, area, blood group and ' +
-              'criticality — we auto-pick the nearest hospital that matches.</span>' +
-            '</span>' +
-            icon('chevron_right', 'chev') +
+          '<button class="home-search" data-act="nav" data-route="#/hospitals">' +
+            icon('search', 'home-search-icon') + '<span>Search a hospital or area</span>' + icon('tune', 'home-search-filter') +
           '</button>' +
 
-          '<div class="list">' +
-            '<button class="list-row" data-act="call" data-num="108">' +
-              '<span class="lr-icon red">' + icon('ambulance') + '</span>' +
-              '<span class="lr-body"><span class="lr-title">Emergency helpline 108</span>' +
-              '<span class="lr-sub">Ambulance &amp; medical emergency dispatch</span></span>' +
-              icon('call', 'chev') +
-            '</button>' +
-          '</div>' +
-
-          locNote +
-          locationStrip() +
-
-          '<section class="section">' +
-            sectionHead('Quick Actions') +
-            '<div class="quick-grid">' +
-              '<button class="quick-card" data-act="nav" data-route="#/hospitals">' +
-                '<span class="quick-icon">' + icon('search') + '</span>' +
-                '<span class="quick-label">Find Hospital</span></button>' +
-              '<button class="quick-card" data-act="nav" data-route="#/map">' +
-                '<span class="quick-icon red">' + icon('near_me') + '</span>' +
-                '<span class="quick-label">Nearby Hospitals</span></button>' +
-              '<button class="quick-card" data-act="nav" data-route="#/blood">' +
-                '<span class="quick-icon orange">' + icon('bloodtype') + '</span>' +
-                '<span class="quick-label">Blood Information</span></button>' +
-              '<button class="quick-card" data-act="nav" data-route="#/documents">' +
-                '<span class="quick-icon green">' + icon('description') + '</span>' +
-                '<span class="quick-label">Required Documents</span></button>' +
-              '<button class="quick-card" data-act="nav" data-route="#/trends">' +
-                '<span class="quick-icon">' + icon('monitoring') + '</span>' +
-                '<span class="quick-label">Disease Trends</span></button>' +
-              '<button class="quick-card" data-act="nav" data-route="#/settings">' +
-                '<span class="quick-icon gray">' + icon('settings') + '</span>' +
-                '<span class="quick-label">Settings</span></button>' +
+          '<section class="section home-actions-section">' +
+            sectionHead('Explore care') +
+            '<div class="quick-grid home-care-grid">' +
+              '<button class="quick-card" data-act="nav" data-route="#/hospitals"><span class="quick-icon">' + icon('local_hospital') + '</span><span class="quick-label">Hospitals</span></button>' +
+              '<button class="quick-card" data-act="nav" data-route="#/map"><span class="quick-icon green">' + icon('near_me') + '</span><span class="quick-label">Nearby map</span></button>' +
+              '<button class="quick-card" data-act="nav" data-route="#/find"><span class="quick-icon violet">' + icon('travel_explore') + '</span><span class="quick-label">Smart finder</span></button>' +
+              '<button class="quick-card" data-act="nav" data-route="#/blood"><span class="quick-icon red">' + icon('bloodtype') + '</span><span class="quick-label">Blood info</span></button>' +
+              '<button class="quick-card" data-act="nav" data-route="#/documents"><span class="quick-icon orange">' + icon('description') + '</span><span class="quick-label">Documents</span></button>' +
+              '<button class="quick-card" data-act="nav" data-route="#/trends"><span class="quick-icon blue">' + icon('monitoring') + '</span><span class="quick-label">Health trends</span></button>' +
             '</div>' +
           '</section>' +
+
+          '<button class="home-emergency" data-act="call" data-num="108">' +
+            '<span class="home-emergency-icon">' + icon('emergency') + '</span>' +
+            '<span class="home-emergency-copy"><strong>Need urgent help?</strong><small>Call the emergency helpline</small></span>' +
+            '<span class="home-emergency-call">' + icon('call') + '<b>108</b></span>' +
+          '</button>' +
 
           '<section class="section">' +
             sectionHead('Nearby Hospitals', 'View all hospitals', '#/hospitals') +

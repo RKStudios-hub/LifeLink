@@ -65,7 +65,7 @@
     open_in_new: 'arrow-up-right-from-square', place: 'map-pin', public: 'earth-americas',
     restart_alt: 'rotate-left', search: 'magnifying-glass', search_off: 'magnifying-glass-minus',
     settings: 'gear', sort: 'arrow-down-wide-short', star: 'star', stethoscope: 'stethoscope',
-    tag: 'tag', travel_explore: 'map-location-dot', upload_file: 'file-arrow-up',
+    tag: 'tag', travel_explore: 'map-location-dot', tune: 'sliders', upload_file: 'file-arrow-up',
     verified: 'circle-check', verified_user: 'shield-halved', visibility: 'eye',
     warning: 'triangle-exclamation', priority_high: 'circle-exclamation',
     low_priority: 'arrow-down-wide-short'

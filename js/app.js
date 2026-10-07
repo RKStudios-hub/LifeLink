@@ -30,11 +30,20 @@
     if (startupFinished) return;
     startupFinished = true;
     var splash = document.getElementById('startup-screen');
-    if (!splash) return;
+    var appRoot = document.getElementById('app');
+    function revealApp() {
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          if (appRoot) appRoot.classList.add('app-ready');
+        });
+      });
+    }
+    if (!splash) { revealApp(); return; }
     var delay = Math.max(0, 800 - (Date.now() - startupStartedAt));
     window.setTimeout(function () {
       splash.classList.add('startup-screen--done');
       splash.setAttribute('aria-hidden', 'true');
+      revealApp();
     }, delay);
   }
 
@@ -858,6 +867,7 @@
 
   function renderNav(screen) {
     var nav = document.getElementById('bottom-nav');
+    var wasVisible = !nav.hidden;
     nav.hidden = !!screen.hideNav;
     if (screen.hideNav) return;
 
@@ -869,14 +879,24 @@
     ];
 
     var activeIndex = items.findIndex(function (it) { return screen.tab === it.tab; });
-    nav.style.setProperty('--nav-offset', (Math.max(0, activeIndex) * 100) + '%');
+    var previousIndex = parseInt(nav.getAttribute('data-active-index'), 10);
+    var canSlide = wasVisible && isFinite(previousIndex) && previousIndex !== activeIndex;
+    nav.style.setProperty('--nav-offset', (Math.max(0, canSlide ? previousIndex : activeIndex) * 100) + '%');
     nav.innerHTML = '<div class="nav-inner"><span class="nav-indicator" aria-hidden="true"></span>' + items.map(function (it) {
       var active = screen.tab === it.tab;
       return '<button class="nav-item' + (active ? ' active' : '') + '" data-act="nav" data-route="' + it.route + '"' +
         (active ? ' aria-current="page"' : '') + '>' +
         '<span class="nav-pill">' + U.icon(it.icon) + '</span>' +
-        '<span>' + it.label + '</span></button>';
+      '<span>' + it.label + '</span></button>';
     }).join('') + '</div>';
+    nav.setAttribute('data-active-index', String(Math.max(0, activeIndex)));
+    if (canSlide) {
+      var indicator = nav.querySelector('.nav-indicator');
+      if (indicator) indicator.getBoundingClientRect();
+      window.requestAnimationFrame(function () {
+        nav.style.setProperty('--nav-offset', (Math.max(0, activeIndex) * 100) + '%');
+      });
+    }
   }
 
   /* ================================================================== */

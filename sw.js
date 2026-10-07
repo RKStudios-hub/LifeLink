@@ -6,7 +6,7 @@
    in the UI instead of serving stale map imagery.
    ========================================================================== */
 
-var CACHE = 'lifelink-v7';
+var CACHE = 'lifelink-v8';
 
 var PRECACHE = [
   './',

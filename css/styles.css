@@ -1687,3 +1687,93 @@ body { background-image: radial-gradient(ellipse at 50% 0%, #fbfcfb 0%, #edf0ef 
   .home-care-grid .quick-card { min-height: 86px; padding: 10px 8px; }
   .home-care-grid .quick-label { font-size: 10px; }
 }
+
+/* Feature the Smart Finder as a primary care action. */
+.finder-feature {
+  position: relative; display: flex; align-items: center; gap: 13px; width: 100%; min-height: 112px;
+  padding: 15px; overflow: hidden; border: 1px solid #d9eee6; border-radius: 22px;
+  background: linear-gradient(115deg, #eaf7f2 0%, #fff 88%); box-shadow: var(--shadow-1);
+  text-align: left; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.finder-feature::after {
+  content: ''; position: absolute; width: 122px; height: 122px; right: 30px; top: -76px;
+  border: 1px solid rgba(49,169,137,.10); border-radius: 50%; pointer-events: none;
+}
+.finder-feature:active { transform: scale(.985); box-shadow: var(--shadow-2); }
+.finder-feature-mark {
+  position: relative; z-index: 1; width: 52px; height: 52px; display: grid; place-items: center;
+  flex: 0 0 auto; border-radius: 18px; color: #fff;
+  background: linear-gradient(145deg, #43b998, #258f74); box-shadow: 0 8px 18px -10px rgba(37,143,116,.7);
+}
+.finder-feature-mark .fa-icon { font-size: 24px; }
+.finder-feature-copy { position: relative; z-index: 1; display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 4px; }
+.finder-feature-kicker { color: #319879; font-size: 9px; font-weight: 800; letter-spacing: .12em; }
+.finder-feature-copy strong { color: #25312d; font-size: 15px; font-weight: 760; letter-spacing: -.035em; }
+.finder-feature-copy small { max-width: 235px; color: #71807a; font-size: 11.5px; line-height: 1.4; }
+.finder-feature-arrow {
+  position: relative; z-index: 1; width: 34px; height: 34px; display: grid; place-items: center;
+  flex: 0 0 auto; border-radius: 50%; color: #278d70; background: rgba(49,169,137,.1);
+  transition: transform .25s cubic-bezier(.2,.8,.2,1), background .2s ease;
+}
+.finder-feature-arrow .fa-icon { font-size: 15px; }
+.finder-feature:hover .finder-feature-arrow { transform: translateX(3px); background: rgba(49,169,137,.17); }
+
+/* Reveal the real app only when startup work has finished. Content groups and
+   care shortcuts enter in a short stagger so the page feels responsive. */
+.app:not(.app-ready) #screen { visibility: hidden; }
+.app:not(.app-ready) .bottom-nav:not([hidden]) { visibility: hidden; }
+.app.app-ready #screen > .wrap,
+.app.app-ready #screen > .map-screen,
+.app.app-ready #screen > .welcome { animation: content-enter .46s cubic-bezier(.2,.75,.25,1) both; }
+.app.app-ready #screen > .wrap > * { animation: content-enter .44s cubic-bezier(.2,.75,.25,1) both; }
+.app.app-ready #screen > .wrap > *:nth-child(1) { animation-delay: .02s; }
+.app.app-ready #screen > .wrap > *:nth-child(2) { animation-delay: .07s; }
+.app.app-ready #screen > .wrap > *:nth-child(3) { animation-delay: .12s; }
+.app.app-ready #screen > .wrap > *:nth-child(4) { animation-delay: .17s; }
+.app.app-ready #screen > .wrap > *:nth-child(5) { animation-delay: .22s; }
+.app.app-ready #screen > .wrap > *:nth-child(6) { animation-delay: .27s; }
+.app.app-ready #screen > .wrap > *:nth-child(7) { animation-delay: .32s; }
+.app.app-ready #screen .home-care-grid > .quick-card,
+.app.app-ready #screen .section > .hosp-card,
+.app.app-ready #screen .section > .card {
+  animation: content-enter .42s cubic-bezier(.2,.75,.25,1) both;
+}
+.app.app-ready #screen .home-care-grid > :nth-child(1), .app.app-ready #screen .section > :nth-child(1) { animation-delay: .08s; }
+.app.app-ready #screen .home-care-grid > :nth-child(2), .app.app-ready #screen .section > :nth-child(2) { animation-delay: .13s; }
+.app.app-ready #screen .home-care-grid > :nth-child(3), .app.app-ready #screen .section > :nth-child(3) { animation-delay: .18s; }
+.app.app-ready #screen .home-care-grid > :nth-child(4), .app.app-ready #screen .section > :nth-child(4) { animation-delay: .23s; }
+.app.app-ready #screen .home-care-grid > :nth-child(5), .app.app-ready #screen .section > :nth-child(5) { animation-delay: .28s; }
+.app.app-ready #screen .home-care-grid > :nth-child(6), .app.app-ready #screen .section > :nth-child(6) { animation-delay: .33s; }
+.app.app-ready .bottom-nav:not([hidden]) { animation: nav-dock-enter .52s cubic-bezier(.2,.85,.25,1) both; }
+.nav-indicator {
+  transition: transform .48s cubic-bezier(.2,.85,.25,1), box-shadow .28s ease;
+  box-shadow: 0 4px 13px rgba(0,0,0,.10), 0 1px 2px rgba(0,0,0,.04);
+}
+.nav-item.active .fa-icon { animation: nav-icon-pop .38s cubic-bezier(.2,.85,.25,1) both; }
+.nav-item.active .nav-pill { transform: translateY(-1px); }
+.finder-feature:focus-visible { outline: 3px solid rgba(49,169,137,.42); outline-offset: 3px; }
+
+@keyframes content-enter {
+  from { opacity: 0; transform: translateY(12px) scale(.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes nav-dock-enter {
+  from { opacity: 0; transform: translate(-50%, 16px) scale(.94); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+@keyframes nav-icon-pop {
+  0% { transform: translateY(2px) scale(.82); }
+  72% { transform: translateY(-2px) scale(1.14); }
+  100% { transform: translateY(-1px) scale(1.04); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app.app-ready #screen > .wrap,
+  .app.app-ready #screen > .map-screen,
+  .app.app-ready #screen > .welcome,
+  .app.app-ready #screen > .wrap > *,
+  .app.app-ready #screen .home-care-grid > .quick-card,
+  .app.app-ready #screen .section > .hosp-card,
+  .app.app-ready #screen .section > .card,
+  .app.app-ready .bottom-nav:not([hidden]),
+  .nav-item.active .fa-icon { animation: none; }
+}

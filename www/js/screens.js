@@ -189,10 +189,17 @@
 
           '<section class="section home-actions-section">' +
             sectionHead('Explore care') +
+            '<button class="finder-feature" data-act="nav" data-route="#/find">' +
+              '<span class="finder-feature-mark">' + icon('travel_explore') + '</span>' +
+              '<span class="finder-feature-copy"><span class="finder-feature-kicker">PERSONALIZED MATCH</span>' +
+                '<strong>Smart Hospital Finder</strong>' +
+                '<small>Find the right nearby hospital for your needs.</small></span>' +
+              '<span class="finder-feature-arrow">' + icon('arrow_forward') + '</span>' +
+            '</button>' +
             '<div class="quick-grid home-care-grid">' +
               '<button class="quick-card" data-act="nav" data-route="#/hospitals"><span class="quick-icon">' + icon('local_hospital') + '</span><span class="quick-label">Hospitals</span></button>' +
               '<button class="quick-card" data-act="nav" data-route="#/map"><span class="quick-icon green">' + icon('near_me') + '</span><span class="quick-label">Nearby map</span></button>' +
-              '<button class="quick-card" data-act="nav" data-route="#/find"><span class="quick-icon violet">' + icon('travel_explore') + '</span><span class="quick-label">Smart finder</span></button>' +
+              '<button class="quick-card" data-act="call" data-num="108"><span class="quick-icon red">' + icon('emergency') + '</span><span class="quick-label">Emergency 108</span></button>' +
               '<button class="quick-card" data-act="nav" data-route="#/blood"><span class="quick-icon red">' + icon('bloodtype') + '</span><span class="quick-label">Blood info</span></button>' +
               '<button class="quick-card" data-act="nav" data-route="#/documents"><span class="quick-icon orange">' + icon('description') + '</span><span class="quick-label">Documents</span></button>' +
               '<button class="quick-card" data-act="nav" data-route="#/trends"><span class="quick-icon blue">' + icon('monitoring') + '</span><span class="quick-label">Health trends</span></button>' +
